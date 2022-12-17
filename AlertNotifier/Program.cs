@@ -48,7 +48,7 @@ namespace AlertNotifier
             // Open a connection to the Edge runtime
             ModuleClient ioTHubModuleClient = await ModuleClient.CreateFromEnvironmentAsync(settings);
             await ioTHubModuleClient.OpenAsync();
-            Console.WriteLine("IoT Hub module client initialized.");
+            Console.WriteLine("Alert Notifier module client initialized.");
 
             // Register callback to be called when a message is received by the module
             await ioTHubModuleClient.SetInputMessageHandlerAsync("alerts", ProcessAlert, ioTHubModuleClient);
