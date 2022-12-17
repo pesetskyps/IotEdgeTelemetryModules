@@ -2,3 +2,4 @@
 .env
 **/config/
 *.user
+diagrams/.$iotedgegeneralarchitecture.drawio.png.dtmp
