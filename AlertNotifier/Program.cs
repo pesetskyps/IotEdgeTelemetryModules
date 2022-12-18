@@ -17,13 +17,21 @@ namespace AlertNotifier
 
         static void Main(string[] args)
         {
-            Init().Wait();
+            try
+            {
+                Init().Wait();
 
-            // Wait until the app unloads or is cancelled
-            var cts = new CancellationTokenSource();
-            AssemblyLoadContext.Default.Unloading += (ctx) => cts.Cancel();
-            Console.CancelKeyPress += (sender, cpe) => cts.Cancel();
-            WhenCancelled(cts.Token).Wait();
+                // Wait until the app unloads or is cancelled
+                var cts = new CancellationTokenSource();
+                AssemblyLoadContext.Default.Unloading += (ctx) => cts.Cancel();
+                Console.CancelKeyPress += (sender, cpe) => cts.Cancel();
+                WhenCancelled(cts.Token).Wait();
+            }
+            catch (Exception)
+            {
+                Console.ReadLine();
+                throw;
+            }
         }
 
         /// <summary>
@@ -48,7 +56,7 @@ namespace AlertNotifier
             // Open a connection to the Edge runtime
             ModuleClient ioTHubModuleClient = await ModuleClient.CreateFromEnvironmentAsync(settings);
             await ioTHubModuleClient.OpenAsync();
-            Console.WriteLine("IoT Hub module client initialized.");
+            Console.WriteLine("Notifier: IoT Hub module client initialized.");
 
             // Register callback to be called when a message is received by the module
             await ioTHubModuleClient.SetInputMessageHandlerAsync("alerts", ProcessAlert, ioTHubModuleClient);
