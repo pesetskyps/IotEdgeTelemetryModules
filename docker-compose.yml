@@ -1,0 +1,17 @@
+version: "3.9"
+services:
+  alertnotifier:
+    build:
+      args:
+        - BuildVersion=${GITHUB_RUN_NUMBER:-0.0.1-local}
+      context: ./AlertNotifier
+      dockerfile: Dockerfile.amd64
+    image:  ${REGISTRY:?"REGISTRY environment variable need to be set"}/iotedgemodules/alertnotifier:${GITHUB_RUN_NUMBER:-0.0.1-local}
+
+  alertprocessing:
+    build:
+      args:
+        - BuildVersion=${GITHUB_RUN_NUMBER:-0.0.1-local}
+      context: ./AlertProcessing
+      dockerfile: Dockerfile.amd64
+    image: ${REGISTRY:?"REGISTRY environment variable need to be set"}/iotedgemodules/alertprocessing:${GITHUB_RUN_NUMBER:-0.0.1-local}

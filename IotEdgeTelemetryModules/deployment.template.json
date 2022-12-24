@@ -70,6 +70,16 @@
               "image": "mcr.microsoft.com/azureiotedge-simulated-temperature-sensor:1.0",
               "createOptions": {}
             }
+          },
+          "AlertNotifier": {
+            "version": "1.0.0",
+            "type": "docker",
+            "status": "running",
+            "restartPolicy": "always",
+            "settings": {
+              "image": "${MODULEDIR<../AlertNotifier>}",
+              "createOptions": {}
+            }
           }
         }
       }
@@ -78,7 +88,8 @@
       "properties.desired": {
         "schemaVersion": "1.2",
         "routes": {
-          "AlertProcessingToIoTHub": "FROM /messages/modules/AlertProcessing/outputs/* INTO $upstream",
+          "AlertNotifierToIoTHub": "FROM /messages/modules/AlertNotifier/outputs/* INTO $upstream",
+          "AlertProcessingToNotifier": "FROM /messages/modules/AlertProcessing/outputs/* INTO BrokeredEndpoint(\"/modules/AlertNotifier/inputs/alerts\")",
           "sensorToAlertProcessing": "FROM /messages/modules/SimulatedTemperatureSensor/outputs/temperatureOutput INTO BrokeredEndpoint(\"/modules/AlertProcessing/inputs/input1\")"
         },
         "storeAndForwardConfiguration": {

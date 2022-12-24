@@ -23,6 +23,7 @@
     <None Include="deployment.debug.template.json" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\AlertNotifier\AlertNotifier.csproj" />
     <ProjectReference Include="..\AlertProcessing\AlertProcessing.csproj" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsRoot)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Azure IoT Edge Tools\AzureIoTEdgeProject.Build.targets" />
