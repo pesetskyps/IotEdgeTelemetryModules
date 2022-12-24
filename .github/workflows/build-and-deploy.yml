@@ -11,8 +11,7 @@ jobs:
           uses: actions/checkout@main
         
         - name: 'Build and push image'
-          env:
-            REGISTRY: ${{ secrets.REGISTRY_LOGIN_SERVER }}
+
           uses: azure/docker-login@v1
           with:
             login-server: ${{ secrets.REGISTRY_LOGIN_SERVER }}
@@ -21,3 +20,5 @@ jobs:
         - run: |
             docker-compose build --parallel
             docker-compose push
+          env:
+            REGISTRY: ${{ secrets.REGISTRY_LOGIN_SERVER }}          
